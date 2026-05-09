@@ -12,11 +12,18 @@ public class SavingsAccount extends Account {
         this.withdrawalsThisMonth = 0;
     }
 
+    public void setWithdrawalLimit(int limit) {
+        if (limit > 0) {
+            this.withdrawalLimit = limit;
+        }
+    }
 
-    public boolean withdraw(double amount) {
+
+    @Override
+    public boolean withdraw(double amount, String transactionId) {
         if (withdrawalLimit > withdrawalsThisMonth && (getBalance() - amount) >= minimumBalance) {
             setBalance(getBalance() - amount);
-            System.out.println("Withdrawn was successful!!! ,"+ amount +" was withdrawn.");
+            System.out.println("Withdrawn was successful!!! ," + amount + " was withdrawn.");
             withdrawalsThisMonth++;
             return true;
         } else if ((getBalance() - amount) >= minimumBalance) {

@@ -1,12 +1,14 @@
 import java.time.LocalDateTime;
 
 public class Transaction {
-    String transactionId;
-    double amount;
-    String type;
-    Account fromAccount;
-    Account towardAccount;
-    String status;
+    private String transactionId;
+    private LocalDateTime timestamp;
+    private double amount;
+    private String type;
+    private Account fromAccount;
+    private Account towardAccount;
+    private String status;
+
     public Transaction(String transactionId, double amount, String type, Account fromAccount, Account towardAccount, String status) {
         this.transactionId = transactionId;
         this.amount = amount;
@@ -14,30 +16,25 @@ public class Transaction {
         this.fromAccount = fromAccount;
         this.towardAccount = towardAccount;
         this.status = status;
-    }
-    public String getTransactionId() {
-        return transactionId;
+        this.timestamp = LocalDateTime.now();
     }
 
-    public Account getFromAccount() {
-        return fromAccount;
-    }
-    public Account getTowardAccount() {
-        return towardAccount;
-    }
-    public String getStatus() {
-        return status;
+    public String getTransactionId() { return transactionId; }
+    public LocalDateTime getTimestamp() { return timestamp; }
+    public double getAmount() { return amount; }
+    public String getType() { return type; }
+    public Account getFromAccount() { return fromAccount; }
+    public Account gettowardAccount() { return towardAccount; }
+    public String getStatus() { return status; }
 
-    }
 
-    public String getType() {
-        return type;
-    }
-    public double getAmount() {
-        return amount;
+    public String getTransactionDetails() {
+        String details = "Transaction ID: " + this.transactionId +
+                " ,Type: " + this.type + " ,Amount: " + this.amount + " ,Status: " + this.status;
+
+        if (this.towardAccount != null) {
+            details += " ,Transferred To: " + this.towardAccount.getAccountNumber();
+        }
+        return details;
     }
 }
-
-
-
-

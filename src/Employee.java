@@ -13,13 +13,11 @@ public class Employee extends User {
     public String getEmployeeId() {
         return EmployeeId;
     }
-
     public String getPosition() {
         return position;
     }
-
     public void setPosition(String pos) {
-        this.position = pos;
+        this.position = position;
     }
 }
 

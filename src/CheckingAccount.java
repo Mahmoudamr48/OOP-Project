@@ -1,10 +1,13 @@
-public abstract class CheckingAccount extends Account {
+public class CheckingAccount extends Account {
+
+
     public CheckingAccount(String accountNumber, Customer owner) {
         super(accountNumber, owner);
     }
 
 
-    public boolean withdraw(double amount) {
+    @Override
+    public boolean withdraw(double amount, String transactionId) {
         if (getBalance() >= amount) {
             setBalance(getBalance() - amount);
             System.out.println("Withdrawn was successful!!! ,"+ amount +" was withdrawn.");
