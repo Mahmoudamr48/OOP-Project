@@ -37,7 +37,7 @@ public abstract class Account {
         if (status.equalsIgnoreCase("Active") || status.equalsIgnoreCase("Inactive")
                 || status.equalsIgnoreCase("Frozen")) {
             this.status = status;
-        } else System.out.println("Error: Invalid account status.");
+        } else System.out.println("RESELECT");
     }
 
 

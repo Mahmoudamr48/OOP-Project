@@ -5,6 +5,7 @@ public abstract class CheckingAccount extends Account {
         super(accountNumber, owner);
     }
 
+
     public boolean withdraw(double amount) {
         if (getBalance() >= amount) {
             setBalance(getBalance() - amount);
@@ -13,10 +14,7 @@ public abstract class CheckingAccount extends Account {
         else {System.out.println("Withdraw failed *probably* due to the" +
                                  " non existence of requested amount.");
             return false;}
-
-
     }
-
 
 
 }

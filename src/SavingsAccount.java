@@ -10,9 +10,7 @@ public class SavingsAccount extends Account {
         minimumBalance = 100;
         this.withdrawalLimit = 3;
         this.withdrawalsThisMonth = 0;
-
     }
-
 
     public boolean withdraw(double amount) {
         if (withdrawalLimit > withdrawalsThisMonth && (getBalance() - amount) >= minimumBalance) {
@@ -39,7 +37,7 @@ public class SavingsAccount extends Account {
         double interest = calculateInterest();
         setBalance(getBalance() + interest);
 
-        System.out.println("Monthly interest applied is " + interest);
+        System.out.println("Monthly interest applied is " + interest+".");
     }
 }
 
