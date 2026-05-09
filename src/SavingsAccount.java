@@ -20,7 +20,7 @@ public class SavingsAccount extends Account {
             System.out.println("Withdrawn was successful!!! ,"+ amount +" was withdrawn.");
             withdrawalsThisMonth++;
             return true;
-        } else if (amount > minimumBalance) {
+        } else if ((getBalance() - amount) >= minimumBalance) {
             System.out.println("This amount cant be withdrawn because the account reached the min balance.");
             return false;
         } else {
@@ -30,6 +30,16 @@ public class SavingsAccount extends Account {
     }
 
 
+    public double calculateInterest() {
+        return getBalance() * (interestRate / 12);
+    }
 
+    public void applyMonthlyInterest() {
+        withdrawalsThisMonth = 0;
+        double interest = calculateInterest();
+        setBalance(getBalance() + interest);
+
+        System.out.println("Monthly interest applied is " + interest);
+    }
 }
 
