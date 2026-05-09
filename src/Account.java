@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public abstract class Account {
+public abstract class  Account implements Reportable {
     private String accountNumber;
     private double balance;
     private String status;
@@ -50,7 +50,7 @@ public abstract class Account {
         }
     }
 
-    public abstract boolean withdraw(double amount);
+    public abstract boolean withdraw(double amount,String transactionId);
 
     protected void setBalance(double balance) {
         if (balance >= 0) {
@@ -58,7 +58,19 @@ public abstract class Account {
         } else {
             System.out.println("Balance cannot be set to a negative number");
         }
-
-
     }
+    public void recordTransaction(double amount,String transactionId,Account towardAccount ) {
+        balance += amount;
+        Transaction t =new Transaction(amount,towardAccount,transactionId);
+        this.transactions.add(t);
+    }
+    protected void recordOutgoingTransfer(double amount, String toAccount, String transactionId,String accountNumber) {
+        balance -= amount;
+        Transaction t = new Transaction(transactionId, "TRANSFER_OUT", amount,
+                accountNumber, toAccount, "COMPLETED");
+        transactions.add(t);
 }
+
+}
+
+
