@@ -48,7 +48,3 @@ public abstract class User {
         setEmail(email);
     }
 }
-
-
-
-}

@@ -6,4 +6,5 @@ public abstract class Transaction {
     Account towardAccount;
     String status;
 
+
 }
