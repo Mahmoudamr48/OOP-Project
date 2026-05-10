@@ -3,15 +3,19 @@ import java.util.List;
 
 public class Bank {
 
-
     private List<User> users;
     private List<Account> accounts;
-    private List<Transaction> transactions;
+    private final List<Transaction> transactions;
+    private final FileManager fileManager;
 
     public Bank() {
         this.users = new ArrayList<>();
         this.accounts = new ArrayList<>();
         this.transactions = new ArrayList<>();
+        this.fileManager = new FileManager();
+
+        this.users = fileManager.loadUsers();
+        this.accounts = fileManager.loadAccounts(this.users);
     }
 
     public List<User> getUsers() { return users; }
@@ -21,7 +25,7 @@ public class Bank {
     public void createUser(User user) {
         if (user != null) {
             users.add(user);
-            System.out.println("System: " + user.getName() + " has been added to the bank's user database.");
+            System.out.println(user.getName() + " has been added to the bank's user database.");
         }
     }
 
@@ -29,14 +33,14 @@ public class Bank {
     public User findUser(String userName) {
         for (User user : users) {
             if (user.getUserName().equalsIgnoreCase(userName)) {
-                return user; // Found them!
+                return user;
             }
         }
-        System.out.println("Error: User '" + userName + "' not found in the system.");
+        System.out.println(userName + "' not found in the system.");
         return null;
     }
 
-    // Helper Method: We need this to search for accounts by their account number
+
     public Account findAccount(String accountNumber) {
         for (Account acc : accounts) {
             if (acc.getAccountNumber().equals(accountNumber)) {
@@ -53,43 +57,52 @@ public class Bank {
         }
     }
 
-    public boolean processTransaction(String sourceAccountNumber, String type, double amount, String toAccountNumber, String transactionId) {
+    public boolean processTransaction(String fromAccountNumber, String type, double amount, String towardAccountNumber, String transactionId) {
 
-        Account source = findAccount(sourceAccountNumber);
-
-        if (source == null) {
-            System.out.println("Error: Source account not found.");
+        Account from = findAccount(fromAccountNumber);
+        if (from == null) {
+            System.out.println("The Main account does not exist.");
             return false;
         }
 
         boolean success = false;
-        if (type.equalsIgnoreCase("Deposit")) {
-            source.deposit(amount, transactionId);
-            success = true;
+        switch (type.toLowerCase()) {
+            case "deposit":
+                from.deposit(amount, transactionId);
+                success = true;
+                break;
 
-        } else if (type.equalsIgnoreCase("Withdrawal")) {
-            success = source.withdraw(amount, transactionId);
+            case "withdrawal":
+                success = from.withdraw(amount, transactionId);
+                break;
 
-        } else if (type.equalsIgnoreCase("Transfer")) {
-            Account to = findAccount(toAccountNumber);
-            if (to != null) {
-                success = source.transfer(transactionId, amount, to);
-            } else {
-                System.out.println("Error: Destination account not found.");
-                success = false;
-            }
+            case "transfer":
+                Account toward = findAccount(towardAccountNumber);
+                if (toward != null) {
+                    success = from.transfer(transactionId, amount, toward);
+                } else {
+                    System.out.println("The account in which the transaction to; does not exist.");
+                }
+                break;
 
-        } else {
-            System.out.println("Error: Unknown transaction type.");
-            success = false;
+            default:
+                System.out.println("Transaction type error");
         }
 
         if (success) {
-            int lastIndex = source.getTransactions().size() - 1;
-            Transaction newReceipt = source.getTransactions().get(lastIndex);
+            List<Transaction> history = from.getTransactions();
+            Transaction newReceipt = history.get(history.size() - 1);
+
             this.transactions.add(newReceipt);
+
+            fileManager.recordTransaction(newReceipt);
         }
 
         return success;
+    }
+
+    public void saveData() {
+        fileManager.saveUsers(this.users);
+        fileManager.saveAccounts(this.accounts);
     }
 }

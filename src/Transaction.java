@@ -1,13 +1,13 @@
 import java.time.LocalDateTime;
 
 public class Transaction {
-    private String transactionId;
-    private LocalDateTime timestamp;
-    private double amount;
-    private String type;
-    private Account fromAccount;
-    private Account towardAccount;
-    private String status;
+    private final String transactionId;
+    private final LocalDateTime timestamp;
+    private final double amount;
+    private final String type;
+    private final Account fromAccount;
+    private final Account towardAccount;
+    private final String status;
 
     public Transaction(String transactionId, double amount, String type, Account fromAccount, Account towardAccount, String status) {
         this.transactionId = transactionId;

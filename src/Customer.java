@@ -35,7 +35,7 @@ public class Customer extends User {
 
     public boolean makeTransaction(Account fromAccount, String Type, double amount, Account towardAccount, String transactionId) {
         if (!accounts.contains(fromAccount)) {
-            System.out.println("Error: You do not have permission to use this account.");
+            System.out.println("You can't access this account.");
             return false;
         }
         if (Type.equalsIgnoreCase("Deposit")) {

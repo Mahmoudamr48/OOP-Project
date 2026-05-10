@@ -1,38 +1,27 @@
 import java.util.ArrayList;
 
 public abstract class Account {
-    private String accountNumber;
+    private final String accountNumber;
     private double balance;
-    private String status;
-    private Customer owner;
+    private String status = "Online";
+    private final Customer owner;
     ArrayList<Transaction> transactions;
 
     public Account(String accountNumber, Customer owner) {
         this.accountNumber = accountNumber;
         this.owner = owner;
-        this.status = "Online";
         this.transactions = new ArrayList<>();
     }
 
-    public String getAccountNumber() {
-        return accountNumber;
-    }
+    public String getAccountNumber() {return accountNumber;}
 
-    public double getBalance() {
-        return balance;
-    }
+    public double getBalance() {return balance;}
 
-    public String getStatus() {
-        return status;
-    }
+    public String getStatus() {return status;}
 
-    public Customer getOwner() {
-        return owner;
-    }
+    public Customer getOwner() {return owner;}
 
-    public ArrayList<Transaction> getTransactions() {
-        return transactions;
-    }
+    public ArrayList<Transaction> getTransactions() {return transactions;}
 
 
     public void setStatus(String status) {

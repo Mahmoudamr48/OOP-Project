@@ -1,6 +1,6 @@
 public abstract class User {
-    private String userId;
-    private String userName;
+    private final String userId;
+    private final String userName;
     private String password;
     private String name;
     private String email;
@@ -19,6 +19,7 @@ public abstract class User {
     public String getUserId() {return userId;}
     public String getUserName() {return userName;}
 
+    public String getPassword() {return password;}
 
     public void setName(String name) {this.name = name;}
     public void setEmail(String email) {this.email = email;}

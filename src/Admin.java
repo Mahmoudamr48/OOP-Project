@@ -1,9 +1,11 @@
 public class Admin extends Employee {
 
-    private int securityClearance;
-    private String adminPrivileges;
+    private final int securityClearance;
+    private final String adminPrivileges;
 
-    public Admin(String userId, String username, String password, String name, String email, String employeeId, String position, int securityClearance, String adminPrivileges) {
+
+    public Admin(String userId, String username, String password, String name, String email,
+                 String employeeId, String position, int securityClearance, String adminPrivileges) {
         super(userId, username, password, name, email, employeeId, position);
         this.securityClearance = securityClearance;
         this.adminPrivileges = adminPrivileges;
@@ -12,31 +14,33 @@ public class Admin extends Employee {
     public int getSecurityClearance() { return securityClearance; }
     public String getAdminPrivileges() { return adminPrivileges; }
 
-    public Employee createEmployee(String userId, String username, String password, String name, String email, String employeeId, String position) {
-        Employee emp = new Employee(userId, username, password, name, email, employeeId, position);
+    public Employee createEmployee(String userId, String username, String password,
+                                   String name, String email, String employeeId, String position) {
 
-        System.out.println("Employee account created successfully for: " + emp.getName() + " (ID: " + emp.getEmployeeId() + ")");
-        return emp;
+        Employee Employee = new Employee(userId, username, password, name, email, employeeId, position);
+        System.out.println("New Employee : " + Employee.getName()+" account has been made.");
+        return Employee;
     }
 
-    public Customer createCustomer(String userId, String username, String password, String name, String email, String address) {
+    public Customer createCustomer(String userId, String username, String password,
+                                   String name, String email, String address) {
+
         Customer customer = new Customer(userId, username, password, name, email, address);
-        System.out.println("Customer account created successfully for: " + customer.getName());
+        System.out.println("Customer account created, A warm welcome to " + customer.getName());
         return customer;
     }
 
+
     public void overrideTransactionLimits(Account account, int newLimit) {
-        if (account instanceof SavingsAccount) {
-            SavingsAccount savingsAccount = (SavingsAccount) account;
-            savingsAccount.setWithdrawalLimit(newLimit);
 
-            System.out.println("Success: Transaction limit overridden for account " + account.getAccountNumber() + ". New limit: " + newLimit);
-
-        } else {
-            System.out.println("Error: This action can only be performed on Savings Accounts. Checking Accounts are already unlimited.");
+        if (account.getClass() != SavingsAccount.class) {
+            System.out.println("Checking Accounts are already unlimited.");
+            return;
         }
+        SavingsAccount savingsAccount = (SavingsAccount) account;
+        savingsAccount.setWithdrawalLimit(newLimit);
+        System.out.println(" Transaction limit overridden, New limit is " + newLimit);
     }
-
 
     public void resetUserPassword(User user, String newPassword) {
         user.setPassword(newPassword);
@@ -45,13 +49,12 @@ public class Admin extends Employee {
 
     public void modifyAccountStatus(Account account, String newStatus) {
         account.setStatus(newStatus);
-        System.out.println("Admin Update: Account " + account.getAccountNumber() + " status changed to " + account.getStatus());
+        System.out.println(account.getAccountNumber() + " 's status changed to " + account.getStatus());
     }
 
     public void modifySystemSettings(double newInterestRate, int newWithdrawalLimit) {
         System.out.println("System Settings Update :");
         System.out.println("New Global Interest Rate: " + (newInterestRate * 100) + "%");
         System.out.println("New Global Default Withdrawal Limit: " + newWithdrawalLimit);
-        System.out.println("Note: Bank manager must apply these defaults to all active accounts.");
     }
 }
